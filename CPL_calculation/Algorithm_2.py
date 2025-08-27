@@ -1,6 +1,14 @@
 '''
-    Algorithm 2 
+    Algorithm 2 - 'def algo2(eps, CMF, delta):'
     (Upper bound for CPL using epsilon, delta and probability distribution between attributes)
+
+    Parameters
+        CMF - conditional probability distribution between attributes.
+        eps - privacy budget.
+        delta - relaxation parameter.
+
+    Return
+        (l, f_max) - CPL
 '''
 
 import numpy as np
@@ -22,9 +30,9 @@ def compute_H(G, G_prime, eps, delta):
 
     return (1+A*(np.exp(eps)-1))/(1+B*(np.exp(eps)-1)), delta*A
 
-def Algo1_updated_privacy_leakage_with_delta(eps, CMF, delta):
+def algo2(eps, CMF, delta):
     num_rows, _ = np.shape(CMF)
-    max_val = 0
+    l = 0
 
     if num_rows == 1:
         return eps, 0, delta
@@ -35,14 +43,12 @@ def Algo1_updated_privacy_leakage_with_delta(eps, CMF, delta):
             if i == j:
                 continue
             G_prime = CMF[j,:]
-            L, f_ = compute_H(G=G, G_prime=G_prime, eps=eps, delta=delta)
-            if max_val < L:
-                max_val = L
-                delta_ = f_
+            H_max, f_ = compute_H(G=G, G_prime=G_prime, eps=eps, delta=delta)
+            if l < H_max:
+                l = H_max
+                f_max = f_
 
-    leakage = np.log(max_val)
+    l = max(0, min(np.log(l), eps))
 
-    leakage = max(0, min(leakage, eps))
-
-    return leakage, delta_
+    return l, f_max
     
