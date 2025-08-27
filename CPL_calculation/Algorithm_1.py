@@ -1,11 +1,14 @@
 '''
-    Algorithm 1 
-    (Actual CPL using transition probability distribution of LDP mechanism 
-    and proabability distribution between attributes).
+    Algorithm 1 - 'def algo1(p, CMF, eps):'
+    (Actual CPL using the transition probability distribution of LDP mechanism 
+    and probability distribution between attributes).
 
-    p - transition probabilities of LDP mechanism.
-    CMF - conditional probability distribution between attributes.
-    eps - privacy budget
+    Parameters
+        p - transition probabilities of LDP mechanism.
+        CMF - conditional probability distribution between attributes.
+
+    Return
+        l - CPL
 '''
 
 import numpy as np
@@ -26,11 +29,9 @@ def algo1(p, CMF, eps):
             for j in range(num_rows):
                 if i == j:
                     continue
+                    
                 G_prime = CMF[j,:]
-                
                 l = max(l, compute_leakage(C, G, G_prime))
-
-    leakage = min(eps, max(0, np.log(l)))
-
-    return leakage
+                
+    return np.log(l)
  
