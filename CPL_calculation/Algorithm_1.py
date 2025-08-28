@@ -16,7 +16,7 @@ import numpy as np
 def compute_leakage(C, G, G_prime):
     return np.sum(C*G)/np.sum(C*G_prime)
 
-def algo1(p, CMF, eps): 
+def algo1(p, CMF): 
     
     num_rows, _ = np.shape(CMF)
     _, num_columns_p = np.shape(p)
