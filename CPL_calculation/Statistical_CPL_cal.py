@@ -1,5 +1,7 @@
 '''
     Statistical privacy leakage calculation.
+
+    This class supports multi-thread computation to speed up calculations.
 '''
 
 import numpy as np
@@ -96,7 +98,7 @@ class Empirical_Privacy():
         Z_copy.append(X_k[0])
         return self.additional_privacy_leakage(Z_copy, X_k, eps, p_value_cal, num_surrogates, samples = samples)
        
-    def additional_privacy_leakage(self, Z, X_k, eps, p_value_cal = False, num_surrogates = 100, samples = 200000):
+    def cal_cpl(self, Z, X_k, eps, p_value_cal = False, num_surrogates = 100, samples = 200000):
         self.X_k_alphabet = self.get_ordered_alphabet_(X_k)
         self.Z_alphabet = self.get_ordered_alphabet_(Z)
 
